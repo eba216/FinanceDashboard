@@ -8,4 +8,4 @@ A financial dashboard. Built with Python Flask.
 * Simple stock market simulator based on Geometric Brownian Motion
 
 ## TODO
-* Add simulator(s) based on machine learning alg0rithms
+* Add simulator(s) based on machine learning algorithms
