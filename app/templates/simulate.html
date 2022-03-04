@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+ Simulator
+{%  endblock %}
+
+{% block content %}
+
+
+<h1 class= "content-head is-center"> Monte Carlo Simulator Dashboard </h1>
+
+    <center>  {{figure|safe}}  </center>
+
+    <h3 align= "center" > Simulate A Stock's Price </h3>
+    <div class="main-container" align = "center">
+    <div class="pure-img">
+        <div>   
+        <div class="pure-g">
+        <div class="l-box-lrg pure-u-1"/>
+        <div class="l-box-lrg pure-u-1 pure-u-md-1-5">
+        <form class = "pure-form" id="simulatorForm" method="post">
+            {{ form.hidden_tag() }}
+            {{ form.csrf_token }}
+            <fieldset>
+                {{ render_field(form.stock_name) }}
+                {{ render_field(form.num_sims) }}
+                {{ render_field(form.sim_time) }}
+                <br>
+
+            <input class="pure-button pure-button-primary" id="simulateButton" type="submit" name="submit1" value ="Simulate"
+                    onclick=" this.form.submit(); this.disabled = true;  return showMessage('simulateButton',
+                    'Commencing Simulation...');"/> 
+
+
+            </fieldset>
+        </form>
+        </div> 
+        </div> 
+        </div> 
+    </div> 
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script type = "text/javascript" src = "{{url_for('static', filename='js/main.js')}}"> </script>
+{% endblock %}

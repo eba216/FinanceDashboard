@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Edwin Baeza Finance
+{%  endblock %}
+
+{% block content %}
+
+
+<h1 class = "content-head is-center"> Financial Dashboard </h1>
+
+<div class="main-container" align = "center">
+    <div id="result" align="center"> <h4> Loading ...  </h4> </div>
+    <div class="pure-img">
+        
+        <div>
+            <div class="pure-g" >
+            <div class="l-box-lrg pure-u-1"/>
+            <div class="l-box-lrg pure-u-1 pure-u-md-1-5" >
+            <form class="pure-form" id="liveForm" method="post" align = "center">
+                {{ form.hidden_tag() }}
+                {{ form.csrf_token }}
+                
+                <fieldset>
+                <legend> <b> Company Ticker </b> </legend> 
+                    {{ render_field(form.stock_name) }}
+                    <input id="viewButton" class="pure-button pure-button-primary" type="submit" value="View Data" name="submit1" 
+                    onclick=" this.form.submit(); this.disabled = true;  return showMessage('viewButton',
+                    'Gathering Data... Please Wait');"/> 
+                    <br>
+                </fieldset>
+            </form>
+            </div>
+            </div>
+        </div>
+
+
+        <div align = "center"> 
+            <div class="pure-img"> <img src="{{stock_info.logo_url}}" alt = ""></img> </div>
+            
+            <table class="pure-table">
+                <thead> <b> {{ stock_info.symbol}} Overview </b>  <br/></thead> 
+
+                <tr class="pure-table-odd">
+                    <th> Company Name</th>
+                    <th> Industry  </th>
+                    <th> Sector  </th>
+                    <th> Website </th>
+                </tr>
+
+                <tr class="pure-table-odd"> 
+                    <td align="center"> {{ stock_info.shortName}} </td>
+                    <td align="center"> {{ stock_info.industry}} </td>
+                    <td align="center"> {{ stock_info.sector }} </td>
+                    <td align="center"> {{ stock_info.website }} </td>
+                </tr>
+
+                <tr class="pure-table-odd"> 
+                    <th>  Market Cap  </th>
+                    <th>  Enterprise Value </th>
+                    <th>  Trailing Eps  </th>
+                    <th>  Trailing PE Ratio</th>
+                </tr>
+                
+                <tr class="pure-table-odd">
+                    <td align="center"> {{ stock_info.marketCap }} </td>
+                    <td align="center"> {{ stock_info.enterpriseValue}} </td>
+                    <td align="center"> {{ stock_info.trailingEps }} </td>
+                    <td align="center"> {{ stock_info.trailingPE  }} </td>
+                </tr>
+                
+                <tr class="pure-table-odd"> 
+                    <th>  Price to Book Ratio  </th>
+                    <th>  Trailing PEG Ratio </th>
+                    <th>  Beta </th>
+                    <th>  Trailing Eps Ratio</th>
+                </tr>
+                
+                <tr class="pure-table-odd">
+                    <td align="center"> {{ stock_info.priceToBook }} </td>
+                    <td align="center"> {{ stock_info.pegRatio}} </td>
+                    <td align="center"> {{ stock_info.beta }} </td>
+                    <td align="center"> {{ stock_info.trailingEps}} </td>
+                </tr> 
+
+            </table> 
+        </div> 
+
+    </div>
+
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script> $SCRIPT_ROOT = {{ request.script_root|tojson }} ; </script>
+<script type="text/javascript" src="{{url_for('static', filename='js/main.js')}}"> </script>
+<script type="text/javascript" src="{{url_for('static', filename='js/index.js')}}"> </script>
+<script>
+$(document).ready(function() { 
+    update_live_data("result", "{{url_for('main.get_live_data')}}", "{{form.stock_name.data}}"); 
+});
+</script>
+
+
+
+{% endblock %}
