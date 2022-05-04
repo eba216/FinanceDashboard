@@ -7,7 +7,14 @@ import numpy as np
 import numpy.random as npr
 import yfinance as yf
 import matplotlib.pyplot as plt
-import mpld3
+
+# this block is needed to import mpld3, looking to fix soon
+import warnings
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore",category=DeprecationWarning)
+    from distutils.version import LooseVersion
+    import mpld3
+
 from matplotlib import style
 
 style.use("seaborn-deep")
@@ -62,11 +69,11 @@ def simulate():
         plt.plot(time, initial*np.ones(steps + 1), linewidth=2, linestyle="--", color ="black",label ="Starting Price")
         plt.plot(time, [0] + St.sum(axis=1)//simulations , linewidth=2 ,  color="black", label ="Simulation Average")
 
-        title = f"{simulations} Realization{'s' if simulations >1 else ''} of Geometric Brownian Motion to estimate {stock} price"
-        plt.title(title, size=24 )
+        title = f"{simulations} Realization{'s' if simulations >1 else ''} of Geometric Brownian Motion to Estimate {stock} Price"
+        plt.title(title, size=24)
 
         plt.xlabel("Years")
-        plt.ylabel(f"Stock Price")
+        plt.ylabel(f"Stock Price (USD)")
         plt.legend()
         figure = mpld3.fig_to_html(fig)
         

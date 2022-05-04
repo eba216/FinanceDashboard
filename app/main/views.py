@@ -6,10 +6,16 @@ from .forms import StockForm
 
 import yfinance as yf
 import matplotlib.pyplot as plt
-import mpld3
+
+# this block is needed to import mpld3, looking to fix soon
+import warnings
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore",category=DeprecationWarning)
+    from distutils.version import LooseVersion
+    import mpld3
+
 from matplotlib import style
 style.use("seaborn-deep")
-
 
 
 @main.route("/get_live_data", methods= ['GET', 'POST'])
@@ -49,7 +55,7 @@ def get_live_data():
     
     fig.get_axes()[0].annotate(f"Data on {now[:10]} as of {now[10:]} (updates every minute)", (0.5, 0.93), 
                             xycoords='figure fraction', ha='center', 
-                            fontsize=65
+                            fontsize=25
                             )
     figure = mpld3.fig_to_html(fig)   
 
